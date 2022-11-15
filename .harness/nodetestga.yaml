@@ -32,8 +32,7 @@ pipeline:
                   identifier: Get_Pull_Requests
                   spec:
                     shell: Sh
-                    command: |-
-                      >
+                    command: |2-
                                 numbers=$(gh pr list \
                                         --repo ${{ github.repository }} \
                                         --label 'request-ci' \
