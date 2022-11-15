@@ -1,0 +1,43 @@
+pipeline:
+  name: node-test-ga
+  identifier: nodetestga
+  projectIdentifier: DhrubaCI
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: dhrubaaccountconnector
+        repoName: node
+        build: <+input>
+  stages:
+    - stage:
+        name: automate-ci
+        identifier: automateci
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Get Pull Requests
+                  identifier: Get_Pull_Requests
+                  spec:
+                    shell: Sh
+                    command: |-
+                      >
+                                numbers=$(gh pr list \
+                                        --repo ${{ github.repository }} \
+                                        --label 'request-ci' \
+                                        --json 'number' \
+                                        -t '{{ range . }}{{ .number }} {{ end }}' \
+                                        --limit 100)
+                                echo "numbers=$numbers" >> $GITHUB_OUTPUT
