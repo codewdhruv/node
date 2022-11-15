@@ -33,6 +33,7 @@ pipeline:
                   spec:
                     shell: Sh
                     command: |2-
+                              >
                                 numbers=$(gh pr list \
                                         --repo ${{ github.repository }} \
                                         --label 'request-ci' \
